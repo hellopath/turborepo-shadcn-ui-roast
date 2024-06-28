@@ -1,9 +1,11 @@
+'use client'
+
 import { Button } from "@repo/ui/components/ui/button";
 import { Logo } from "@repo/ui/components/ui/logo";
 import { DragDropArea } from "@repo/ui/components/ui/dragDropArea";
 import { body, h3 } from "@ui/typography";
 import { ImageWrapper } from "@repo/ui/components/ui/imageWrapper";
-
+import { ActionableImageWrapper } from "@repo/ui/components/ui/actionableImageWrapper";
 
 export default function Page() {
   return (
@@ -22,6 +24,12 @@ export default function Page() {
             <ImageWrapper src="/profile2.jpg" alt="profile 2" className={`w-1/2`} />
             <ImageWrapper src="/profile3.jpg" alt="profile 3" className={`w-1/2`} />
           </div>
+          <ActionableImageWrapper
+            src="/profile3.jpg"
+            alt="profile 3"
+            className={`w-1/2`}
+            onDelete={() => { console.log('delete') }}
+          />
         </div>
       </div>
     </main>

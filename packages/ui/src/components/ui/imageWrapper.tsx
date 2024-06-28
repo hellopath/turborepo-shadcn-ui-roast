@@ -27,7 +27,7 @@ const ImageWrapper = forwardRef<HTMLDivElement, ImageWrapperProps>(
     return (
       <div
         ref={ref}
-        className={`aspect-portrait relative bg-transparent overflow-hidden rounded-lg ${className}`}
+        className={`aspect-portrait relative bg-gray-900 overflow-hidden rounded-lg ${className}`}
         {...props}
       >
         <Transition
