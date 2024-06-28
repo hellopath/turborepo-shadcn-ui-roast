@@ -1,10 +1,13 @@
 import { Button } from "@repo/ui/components/ui/button";
 import { Logo } from "@repo/ui/components/ui/logo";
+import { DragDropArea } from "@repo/ui/components/ui/dragDropArea";
 import { body, h3 } from "@ui/typography";
+import { ImageWrapper } from "@repo/ui/components/ui/imageWrapper";
+
 
 export default function Page() {
   return (
-    <main className={`bg-gray-900 fixed inset-0 w-screen h-screen flex justify-center items-center`}>
+    <main className={`${body} text-secondary bg-gray-900 fixed inset-0 w-screen h-screen flex justify-center items-center`}>
       <div className={`bg-black rounded-xl w-full h-full max-w-[390px] max-h-[844px] shadow-xl text-center`}>
         <div className={`px-10`}>
           <Logo />
@@ -13,6 +16,12 @@ export default function Page() {
           <Button size={`lg`} className={`w-full`}>
             Unveil the Best You!
           </Button>
+          {/* <DragDropArea /> */}
+          <div className={`flex`}>
+            <ImageWrapper src="/profile1.jpg" alt="profile 1" className={`w-1/2`} />
+            <ImageWrapper src="/profile2.jpg" alt="profile 2" className={`w-1/2`} />
+            <ImageWrapper src="/profile3.jpg" alt="profile 3" className={`w-1/2`} />
+          </div>
         </div>
       </div>
     </main>

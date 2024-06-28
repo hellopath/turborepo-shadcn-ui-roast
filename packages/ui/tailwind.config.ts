@@ -1,5 +1,50 @@
 import type { Config } from "tailwindcss";
 import tailwindcssAnimate from "tailwindcss-animate";
+const plugin = require('tailwindcss/plugin')
+
+const radialGradientPlugin = plugin(
+  function ({ matchUtilities, theme }: { matchUtilities: any, theme: any }) {
+    matchUtilities(
+      {
+        // map to bg-radient-[*]
+        'bg-radient': (value: string) => ({
+          'background-image': `radial-gradient(${value},var(--tw-gradient-stops))`,
+        }),
+      },
+      { values: theme('radialGradients') }
+    )
+  },
+  {
+    theme: {
+      radialGradients: _presets(),
+    },
+  }
+)
+
+/**
+ * utility class presets
+ */
+function _presets(): Record<string, string> {
+  const shapes = ['circle', 'ellipse'];
+  const pos = {
+    c: 'center',
+    t: 'top',
+    b: 'bottom',
+    l: 'left',
+    r: 'right',
+    tl: 'top left',
+    tr: 'top right',
+    bl: 'bottom left',
+    br: 'bottom right',
+  };
+  let result: Record<string, string> = {};
+  for (const shape of shapes)
+    for (const [posName, posValue] of Object.entries(pos))
+      result[`${shape}-${posName}`] = `${shape} at ${posValue}`;
+
+  return result;
+}
+
 
 const config = {
   darkMode: ["class"],
@@ -23,6 +68,9 @@ const config = {
       },
     },
     extend: {
+      aspectRatio: {
+        portrait: '4/5',
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -85,7 +133,7 @@ const config = {
       },
     },
   },
-  plugins: [tailwindcssAnimate],
+  plugins: [tailwindcssAnimate, radialGradientPlugin],
 } satisfies Config;
 
 export default config;

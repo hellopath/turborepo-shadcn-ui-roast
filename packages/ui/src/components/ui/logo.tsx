@@ -1,8 +1,8 @@
 import { forwardRef } from "react";
 
-const Logo = forwardRef<SVGSVGElement, LogoProps>(({ className, ref }) => {
+const Logo = forwardRef<SVGSVGElement, LogoProps>(({ className, ...props }, ref) => {
   return (
-    <svg ref={ref} className={`${className}`} width="124" height="33" viewBox="0 0 124 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg ref={ref} className={`${className}`} width="124" height="33" viewBox="0 0 124 33" fill="none" {...props}>
       <g clipPath="url(#clip0_2002_177)">
         <mask id="mask0_2002_177" style={{ maskType: `luminance` }} maskUnits="userSpaceOnUse" x="44" y="4" width="80" height="25">
           <path d="M123.829 4.90149H44.1288V28.05H123.829V4.90149Z" fill="white" />
