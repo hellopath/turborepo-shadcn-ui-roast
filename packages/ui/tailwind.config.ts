@@ -12,6 +12,9 @@ const config = {
   ],
   prefix: "",
   theme: {
+    fontFamily: {
+      'display': ['SFCompact', 'Inter', 'sans-serif'],
+    },
     container: {
       center: true,
       padding: "2rem",
@@ -26,6 +29,12 @@ const config = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        gradient: {
+          button: {
+            from : "hsl(var(--gradient-button-from))",
+            to: "hsl(var(--gradient-button-to))",
+          }
+        },
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",

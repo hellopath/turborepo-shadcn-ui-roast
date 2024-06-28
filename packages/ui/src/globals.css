@@ -3,6 +3,23 @@
 @tailwind utilities;
 
 @layer base {
+  @font-face {
+    font-family: 'SFCompact';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(/fonts/SFCompactText-Regular.woff2) format('woff2');
+  }
+  @font-face {
+    font-family: 'SFCompact';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url(/fonts/SFCompactText-Semibold.woff2) format('woff2');
+  }
+}
+
+@layer base {
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
@@ -13,14 +30,14 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
+    --primary: 13 100% 95%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 40% 96.1%;
+    --secondary: 13 100% 83%;
     --secondary-foreground: 222.2 47.4% 11.2%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 13 100% 95%;
+    --muted-foreground: 13 100% 83%;
 
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
@@ -31,6 +48,9 @@
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
+
+    --gradient-button-from: 11 92% 46%;
+    --gradient-button-to: 8 95% 49%;
 
     --radius: 0.5rem;
   }
