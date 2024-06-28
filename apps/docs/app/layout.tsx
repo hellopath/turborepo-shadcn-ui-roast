@@ -1,8 +1,6 @@
 import "@repo/ui/globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-
-const inter = Inter({ subsets: ["latin"] });
+import { Wrapper } from "./wrapper";
 
 export const metadata: Metadata = {
   title: "Docs",
@@ -16,7 +14,11 @@ export default function RootLayout({
 }): JSX.Element {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body>
+        <Wrapper>
+          {children}
+        </Wrapper>
+      </body>
     </html>
   );
 }
