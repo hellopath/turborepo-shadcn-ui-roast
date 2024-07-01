@@ -25,7 +25,7 @@ s3_client = boto3.client(
 )
 
 class PhotoGroup(db.Model):
-    id = db.Column(db.String(36), primary_key=True, default=str(uuid.uuid4()))
+    id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     photos = db.relationship('Photo', backref='photo_group', lazy=True, cascade="all, delete-orphan")
 
 class Photo(db.Model):
@@ -51,7 +51,7 @@ def upload_to_s3(file):
         filename,
         ExtraArgs={"ContentType": file.content_type}
     )
-    s3_url = f"https://{bucket_name}.s3.{os.getenv('AWS_S3_REGION_NAME')}.amazonaws.com/{filename}"
+    s3_url = f"https://{bucket_name}.s3.amazonaws.com/{filename}"
     return filename, s3_url
 
 def generate_random_scores():
@@ -147,6 +147,7 @@ def upload_photo_to_group(group_id):
     db.session.commit()
 
     return jsonify({
+        "id": photo.id,
         "filename": filename,
         "s3_url": s3_url,
         "attractivenessScore": scores['attractivenessScore'],

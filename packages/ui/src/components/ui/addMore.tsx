@@ -1,16 +1,17 @@
 'use client'
 
-import { CloudArrowUpIcon } from '@heroicons/react/24/outline'
+import { PlusCircleIcon } from '@heroicons/react/24/outline'
 import { ChangeEvent, DragEvent, forwardRef, useRef, useState } from "react";
 
-export interface DragDropAreaProps
+export interface AddMoreProps
   extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
+  userId: string;
   onUploadedData?: (data: any) => void;
 }
 
-const DragDropArea = forwardRef<HTMLDivElement, DragDropAreaProps>(
-  ({ className, onUploadedData, ...props }, ref) => {
+const AddMore = forwardRef<HTMLDivElement, AddMoreProps>(
+  ({ className, userId, onUploadedData, ...props }, ref) => {
     const [error, setError] = useState('');
     const inputRef = useRef<HTMLInputElement>(null);
     const rounded = `rounded-[100px]`
@@ -18,18 +19,18 @@ const DragDropArea = forwardRef<HTMLDivElement, DragDropAreaProps>(
     const onUpload = async (files: File[]) => {
       setError('');
 
-      if (files.length > 4) {
-        setError('You can only upload up to 4 images.');
+      if (files.length > 1) {
+        setError('You can only upload up to 1 image.');
         return;
       }
 
       const formData = new FormData();
       files.forEach(file => {
-        formData.append('photos', file);
+        formData.append('photo', file);
       });
 
       try {
-        const response = await fetch('http://localhost:5001/upload', {
+        const response = await fetch(`http://localhost:5001/upload/${userId}`, {
           method: 'POST',
           body: formData,
         });
@@ -68,7 +69,7 @@ const DragDropArea = forwardRef<HTMLDivElement, DragDropAreaProps>(
     return (
       <div
         ref={ref}
-        className={`h-[50vh] relative ${className} ${rounded}`}
+        className={`relative h-full flex justify-center items-center ${className} ${rounded}`}
         onDrop={handleDrop}
         onDragOver={handleDragOver}
         onClick={handleClick}
@@ -82,28 +83,15 @@ const DragDropArea = forwardRef<HTMLDivElement, DragDropAreaProps>(
           className="hidden"
           onChange={handleFileInputChange}
         />
-        <div className={`bg-transparent w-full h-full absolute z-10 ${rounded} flex justify-center items-center top-0`}>
+        <div className={`bg-transparent w-full h-full relative z-10 ${rounded} flex justify-center items-center`}>
           <div className={`flex flex-col justify-center items-center`}>
-            <CloudArrowUpIcon className={`size-32 stroke-[0.3px]`} />
-            <p className={``}>
-              Drag & Drop<br />your profile pics
-            </p>
-            {error && <p className="text-red-500">{error}</p>}
+            <PlusCircleIcon className={`size-24 stroke-[0.3px]`} />
+            <p>Add more</p>
           </div>
         </div>
-        <svg viewBox="0 0 315 405" fill="none" className={`absolute top-0 w-full h-full`}>
-          <rect x="0.5" y="0.5" width="314" height="404" rx="99.5" fill="url(#paint0_radial_2006_239)" fillOpacity="0.4" />
-          <rect x="0.5" y="0.5" width="314" height="404" rx="99.5" stroke="#FFEDE8" strokeLinecap="round" strokeDasharray="11 11" />
-          <defs>
-            <radialGradient id="paint0_radial_2006_239" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(158.016 175.706) rotate(90.129) scale(229.294 178.34)">
-              <stop stopColor="#FF6032" />
-              <stop offset="1" stopColor="#FF6032" stopOpacity="0" />
-            </radialGradient>
-          </defs>
-        </svg>
       </div>
     );
   },
 );
 
-export { DragDropArea };
+export { AddMore };
