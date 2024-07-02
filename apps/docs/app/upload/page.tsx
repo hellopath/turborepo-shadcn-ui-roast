@@ -9,7 +9,6 @@ import { useRouter } from 'next/navigation'
 export default function Upload() {
   const router = useRouter()
   const { setUser } = useUserStore(({ setUser }) => ({ setUser }));
-  const { user } = useUserStore(({ user }) => ({ user }));
   const onUploadedData = (data: any) => {
     setUser({
       id: data.group_id,

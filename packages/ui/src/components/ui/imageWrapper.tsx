@@ -28,7 +28,7 @@ const ImageWrapper = forwardRef<HTMLDivElement, ImageWrapperProps>(
     const [imageState, setImageState] = useState<AnimationState>({ x: 0, y: 0, rotation: 0 });
     const xRandomOffset = Math.floor(Math.random() * 4) + 1;
     const yRandomOffset = Math.floor(Math.random() * 10) + 1;
-    const rotationRandomOffset = Math.floor(Math.random() * 4) + 1;
+    const rotationRandomOffset = Math.floor(Math.random() * 2) + 1;
 
     const onLoad = (e: SyntheticEvent<HTMLImageElement, Event>) => {
       setSize({ width: e.currentTarget.width, height: e.currentTarget.height });

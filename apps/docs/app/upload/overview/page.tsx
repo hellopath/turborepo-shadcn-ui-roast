@@ -1,6 +1,5 @@
 'use client'
 
-import { DragDropArea } from "@repo/ui/components/ui/dragDropArea";
 import { Logo } from "@repo/ui/components/ui/logo";
 import { body, h3 } from "@ui/typography";
 import { useUserStore } from "../../hooks/useState";
@@ -21,7 +20,7 @@ export default function UploadOverview() {
   const { user } = useUserStore(({ user }) => ({ user }));
   const [images, setImages] = useState<Image[]>([]);
   useEffect(() => {
-    if (!user) router.push('/upload')
+    if (!user) router.push('/')
     const loadUserImages = async () => {
       try {
         const response = await fetch(`http://localhost:5001/photos/${user?.id}`);

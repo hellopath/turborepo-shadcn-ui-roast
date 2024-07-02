@@ -1,6 +1,11 @@
 import { forwardRef } from "react";
 
-const Logo = forwardRef<SVGSVGElement, LogoProps>(({ className, ...props }, ref) => {
+export interface LogoProps extends React.SVGProps<SVGSVGElement> {
+  isFlatColor?: boolean;
+  className?: string;
+}
+
+const Logo = forwardRef<SVGSVGElement, LogoProps>(({ className, isFlatColor = false, ...props }, ref) => {
   return (
     <svg ref={ref} className={`${className}`} width="124" height="33" viewBox="0 0 124 33" fill="none" {...props}>
       <g clipPath="url(#clip0_2002_177)">
@@ -26,24 +31,64 @@ const Logo = forwardRef<SVGSVGElement, LogoProps>(({ className, ...props }, ref)
       </g>
       <defs>
         <linearGradient id="paint0_linear_2002_177" x1="1.78534" y1="23.0272" x2="23.431" y2="23.0272" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#FF6032" />
-          <stop offset="0.518" stopColor="#FF0000" />
-          <stop offset="0.999" stopColor="#FF0000" />
+          {
+            isFlatColor ? (
+              <>
+                <stop stopColor="#ffffff" />
+              </>
+            ) : (
+              <>
+                <stop stopColor="#FF6032" />
+                <stop offset="0.518" stopColor="#FF0000" />
+                <stop offset="0.999" stopColor="#FF0000" />
+              </>
+            )
+          }
         </linearGradient>
         <linearGradient id="paint1_linear_2002_177" x1="3.46951" y1="32.4937" x2="3.46951" y2="19.6185" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#FF6032" />
-          <stop offset="0.518" stopColor="#FB6D6D" />
-          <stop offset="0.999" stopColor="#FF0000" />
+          {
+            isFlatColor ? (
+              <>
+                <stop stopColor="#ffffff" />
+              </>
+            ) : (
+              <>
+                <stop stopColor="#FF6032" />
+                <stop offset="0.518" stopColor="#FF0000" />
+                <stop offset="0.999" stopColor="#FF0000" />
+              </>
+            )
+          }
         </linearGradient>
         <linearGradient id="paint2_linear_2002_177" x1="0.0998535" y1="5.01077" x2="20.3172" y2="5.01077" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#FF3232" />
-          <stop offset="0.49" stopColor="#FF6032" />
-          <stop offset="0.999" stopColor="#FF0000" />
+          {
+            isFlatColor ? (
+              <>
+                <stop stopColor="#ffffff" />
+              </>
+            ) : (
+              <>
+                <stop stopColor="#FF3232" />
+                <stop offset="0.49" stopColor="#FF6032" />
+                <stop offset="0.999" stopColor="#FF0000" />
+              </>
+            )
+          }
         </linearGradient>
         <linearGradient id="paint3_linear_2002_177" x1="18.6325" y1="1.41676" x2="18.6325" y2="15.9616" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#FF6032" />
-          <stop offset="0.518" stopColor="#FF0000" />
-          <stop offset="0.999" stopColor="#FB6D6D" />
+          {
+            isFlatColor ? (
+              <>
+                <stop stopColor="#ffffff" />
+              </>
+            ) : (
+              <>
+                <stop stopColor="#FF6032" />
+                <stop offset="0.518" stopColor="#FF0000" />
+                <stop offset="0.999" stopColor="#FB6D6D" />
+              </>
+            )
+          }
         </linearGradient>
         <clipPath id="clip0_2002_177">
           <rect width="124" height="33" fill="white" />
@@ -53,9 +98,5 @@ const Logo = forwardRef<SVGSVGElement, LogoProps>(({ className, ...props }, ref)
 
   );
 });
-
-export interface LogoProps extends React.SVGProps<SVGSVGElement> {
-  className?: string;
-}
 
 export { Logo };
