@@ -10,6 +10,7 @@ export interface ImageWrapperProps
   extends React.HTMLAttributes<HTMLDivElement> {
   src: string;
   alt: string;
+  aspect?: string;
   className?: string;
   isAnimated?: boolean;
 }
@@ -21,7 +22,7 @@ interface AnimationState {
 }
 
 const ImageWrapper = forwardRef<HTMLDivElement, ImageWrapperProps>(
-  ({ className, src, alt, isAnimated = false, ...props }, ref) => {
+  ({ className, src, alt, aspect = 'aspect-portrait', isAnimated = false, ...props }, ref) => {
     const time = useRef<number>(0);
     const [isLoaded, setIsLoaded] = useState(false);
     const [size, setSize] = useState({ width: 0, height: 0 });
@@ -55,7 +56,7 @@ const ImageWrapper = forwardRef<HTMLDivElement, ImageWrapperProps>(
         {...props}
       >
         <div
-          className={`aspect-portrait relative overflow-hidden rounded-lg`}
+          className={`${aspect} relative overflow-hidden rounded-lg`}
           style={{
             transform: `translate(${imageState.x}px, ${imageState.y}px) rotate(${imageState.rotation}deg)`
           }}
@@ -76,7 +77,7 @@ const ImageWrapper = forwardRef<HTMLDivElement, ImageWrapperProps>(
           </Transition>
           <div
             className={`
-              relative inset-0 w-full h-full aspect-portrait
+              relative inset-0 w-full h-full ${aspect}
               transition-opacity duration-500 ease-circ-out
               ${isLoaded ? 'opacity-100' : 'opacity-0'}
             `}

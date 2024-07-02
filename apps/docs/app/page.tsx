@@ -33,6 +33,24 @@ export default function Page() {
                 className={`transition-all duration-500 ease-in-out ${isHighlighted ? `-rotate-6 scale-105 translate-x-4` : `-rotate-3`}`}
               />
             </div>
+            <div className={`w-14 absolute top-16 left-48`}>
+              <ImageWrapper
+                isAnimated
+                src="/emoji-1.png"
+                alt="emoji 2"
+                aspect="aspect-square"
+                className={`transition-all duration-500 ease-in-out ${isHighlighted ? `-rotate-6 translate-x-4` : `-rotate-3`}`}
+              />
+            </div>
+            <div className={`w-14 absolute top-72 -left-14`}>
+              <ImageWrapper
+                isAnimated
+                src="/emoji-2.png"
+                alt="emoji 2"
+                aspect="aspect-square"
+                className={`transition-all duration-500 ease-in-out ${isHighlighted ? `-rotate-6 translate-x-4` : `-rotate-3`}`}
+              />
+            </div>
             <div className={`w-5/12 absolute top-36 left-20`}>
               <ImageWrapper
                 isAnimated

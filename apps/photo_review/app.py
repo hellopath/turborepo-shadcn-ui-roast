@@ -69,6 +69,41 @@ def generate_random_scores():
         ])
     }
 
+def save_photo_to_db(file, photo_group_id):
+    filename, s3_url = upload_to_s3(file)
+    scores = generate_random_scores()
+
+    photo = Photo(
+        filename=filename,
+        s3_url=s3_url,
+        attractivenessScore=scores['attractivenessScore'],
+        confidenceScore=scores['confidenceScore'],
+        authenticityScore=scores['authenticityScore'],
+        potentialScore=scores['potentialScore'],
+        critique=scores['critique'],
+        photo_group_id=photo_group_id
+    )
+    db.session.add(photo)
+    db.session.flush()  # Ensure the photo gets an ID before committing
+
+    return {
+        "id": photo.id,
+        "filename": filename,
+        "s3_url": s3_url,
+        "attractivenessScore": scores['attractivenessScore'],
+        "confidenceScore": scores['confidenceScore'],
+        "authenticityScore": scores['authenticityScore'],
+        "potentialScore": scores['potentialScore'],
+        "critique": scores['critique']
+    }
+
+def commit_db_changes():
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        raise e
+
 @app.route('/upload', methods=['POST'])
 def upload_photos():
     if 'photos' not in request.files:
@@ -82,37 +117,9 @@ def upload_photos():
     db.session.add(photo_group)
     db.session.flush()
 
-    uploaded_photos = []
+    uploaded_photos = [save_photo_to_db(file, photo_group.id) for file in files if file.filename]
 
-    for file in files:
-        if not file.filename:
-            continue
-
-        filename, s3_url = upload_to_s3(file)
-        scores = generate_random_scores()
-
-        photo = Photo(
-            filename=filename,
-            s3_url=s3_url,
-            attractivenessScore=scores['attractivenessScore'],
-            confidenceScore=scores['confidenceScore'],
-            authenticityScore=scores['authenticityScore'],
-            potentialScore=scores['potentialScore'],
-            critique=scores['critique'],
-            photo_group_id=photo_group.id
-        )
-        db.session.add(photo)
-        uploaded_photos.append({
-            "filename": filename,
-            "s3_url": s3_url,
-            "attractivenessScore": scores['attractivenessScore'],
-            "confidenceScore": scores['confidenceScore'],
-            "authenticityScore": scores['authenticityScore'],
-            "potentialScore": scores['potentialScore'],
-            "critique": scores['critique']
-        })
-
-    db.session.commit()
+    commit_db_changes()
 
     return jsonify({
         "group_id": photo_group.id,
@@ -130,32 +137,10 @@ def upload_photo_to_group(group_id):
     if not file.filename:
         return jsonify({"error": "No file uploaded"}), 400
 
-    filename, s3_url = upload_to_s3(file)
-    scores = generate_random_scores()
+    uploaded_photo = save_photo_to_db(file, photo_group.id)
+    commit_db_changes()
 
-    photo = Photo(
-        filename=filename,
-        s3_url=s3_url,
-        attractivenessScore=scores['attractivenessScore'],
-        confidenceScore=scores['confidenceScore'],
-        authenticityScore=scores['authenticityScore'],
-        potentialScore=scores['potentialScore'],
-        critique=scores['critique'],
-        photo_group_id=photo_group.id
-    )
-    db.session.add(photo)
-    db.session.commit()
-
-    return jsonify({
-        "id": photo.id,
-        "filename": filename,
-        "s3_url": s3_url,
-        "attractivenessScore": scores['attractivenessScore'],
-        "confidenceScore": scores['confidenceScore'],
-        "authenticityScore": scores['authenticityScore'],
-        "potentialScore": scores['potentialScore'],
-        "critique": scores['critique']
-    }), 201
+    return jsonify(uploaded_photo), 201
 
 @app.route('/photos/<string:group_id>', methods=['GET'])
 def get_photos_by_group_id(group_id):
@@ -180,7 +165,7 @@ def delete_photo(group_id, photo_id):
 
     # Delete the photo from the database
     db.session.delete(photo)
-    db.session.commit()
+    commit_db_changes()
 
     return jsonify({"message": "Photo deleted successfully"}), 200
 
