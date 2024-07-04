@@ -3,7 +3,6 @@
 import { Button } from "@repo/ui/components/ui/button";
 import { ImageWrapper } from "@repo/ui/components/ui/imageWrapper";
 import { Logo } from "@repo/ui/components/ui/logo";
-import { HomeThree } from "@ui/components/three/home";
 import { body, h3 } from "@ui/typography";
 import { useState, useRef } from "react";
 import Link from "next/link";
